@@ -52,12 +52,19 @@ class Calculator extends Component {
     // if basic operator clicked
     if (operator) {
       const newValue = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
-      this.setState({
-        value: newValue,
-        display: newValue.toString(),
-        //TODO: create history
-        // history: [...this.state.history, [value, operator, newValue]],
-      });
+      if (newValue + '' === 'NaN' || newValue + '' === 'Infinity') {
+        this.setState({
+          value: null,
+          display: newValue + '' === 'NaN' ? 'Result is NaN' : '∞',
+        });
+      } else {
+        this.setState({
+          value: newValue,
+          display: newValue.toString(),
+          //TODO: create history
+          // history: [...this.state.history, [value, operator, newValue]],
+        });
+      }
     }
   };
 
