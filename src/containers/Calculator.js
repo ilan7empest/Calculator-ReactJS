@@ -49,7 +49,7 @@ class Calculator extends Component {
   basicOperator = (selectedOperator) => {
     const { value, display, operator } = this.state;
     // Convert "display" from a string to a number
-    const parseDisplay = parseInt(display);
+    const parseDisplay = parseFloat(display);
     this.setState({
       operator: selectedOperator,
       isOperatorClicked: true,
