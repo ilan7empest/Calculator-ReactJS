@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import CalcButton from '../components/CalcButton';
+import { basicOperators } from '../utils/basicOperators';
 import { Total } from '../components/total';
 import { History } from '../components/history';
 
 class Calculator extends Component {
   state = {
     value: null,
-    totalDisplay: '0',
+    display: '0',
     operator: null,
     isOperatorClicked: false,
     history: [],
   };
-  renderNumbers(...args) {
+  renderCalculatorKey(...args) {
     const [child, cn, cb] = args;
     return (
       <CalcButton className={cn} onClick={cb}>
@@ -19,19 +20,47 @@ class Calculator extends Component {
       </CalcButton>
     );
   }
-  displayDigit(digit) {
-    const { isOperatorClicked, totalDisplay } = this.state;
+  //digit = string. returned value from the button
+  displayDigit = (digit) => {
+    const { isOperatorClicked, display } = this.state;
     if (isOperatorClicked) {
       this.setState({
-        totalDisplay: digit,
+        display: digit,
         isOperatorClicked: false,
       });
     } else {
       this.setState({
-        totalDisplay: totalDisplay === '0' ? digit : totalDisplay + digit,
+        display: display === '0' ? digit : display + digit,
       });
     }
-  }
+  };
+  //Basic Operators
+  basicOperator = (selectedOperator) => {
+    const { value, display, operator } = this.state;
+    // Convert "display" from a string to a number
+    const parseDisplay = parseInt(display);
+    this.setState({
+      operator: selectedOperator,
+      isOperatorClicked: true,
+    });
+    // value set to 0 if no digit clicked
+    if (value === null) {
+      this.setState({
+        value: parseDisplay,
+      });
+    }
+    // if basic operator clicked
+    if (operator) {
+      const newValue = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
+      this.setState({
+        value: newValue,
+        display: newValue.toString(),
+        //TODO: create history
+        // history: [...this.state.history, [value, operator, newValue]],
+      });
+    }
+  };
+
   click = (value) => {
     console.log(value);
   };
@@ -39,31 +68,33 @@ class Calculator extends Component {
     return (
       <div>
         <History history={this.state.history} />
-        <Total total={this.state.totalDisplay} />
+        <Total total={this.state.display} />
         <div className='row'>
-          {this.renderNumbers('9', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('-', 'key', (e) => this.click(e))}
-          {this.renderNumbers('+', 'key', (e) => this.click(e))}
+          {this.renderCalculatorKey('/', 'key', (e) => this.basicOperator('/'))}
+          {this.renderCalculatorKey('*', 'key', (e) => this.basicOperator('*'))}
+          {this.renderCalculatorKey('-', 'key', (e) => this.basicOperator('-'))}
+          {this.renderCalculatorKey('+', 'key', (e) => this.basicOperator('+'))}
+          {this.renderCalculatorKey('=', 'key', (e) => this.basicOperator(e))}
         </div>
         <div className='row'>
-          {this.renderNumbers('9', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('8', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('7', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('8', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('7', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {this.renderNumbers('6', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('5', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('4', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('6', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('5', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('4', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {this.renderNumbers('3', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('2', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('1', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('3', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('2', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {this.renderNumbers('+/-', 'key', (e) => this.click(e))}
-          {this.renderNumbers('0', 'key', (e) => this.displayDigit(e))}
-          {this.renderNumbers('.', 'key', (e) => this.click(e))}
+          {this.renderCalculatorKey('+/-', 'key', (e) => this.click(e))}
+          {this.renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
+          {this.renderCalculatorKey('.', 'key', (e) => this.click(e))}
         </div>
       </div>
     );
