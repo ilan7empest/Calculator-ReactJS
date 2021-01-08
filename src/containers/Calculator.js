@@ -20,7 +20,7 @@ class Calculator extends Component {
       </CalcButton>
     );
   }
-  //digit = string. returned value from the button
+  //Handle Digit keys (0-9). @digit = string. returned value from the button
   displayDigit = (digit) => {
     const { isOperatorClicked, display } = this.state;
     if (isOperatorClicked) {
@@ -31,6 +31,17 @@ class Calculator extends Component {
     } else {
       this.setState({
         display: display === '0' ? digit : display + digit,
+      });
+    }
+  };
+
+  // Handle Decimal Key
+  displayDecimal = () => {
+    const { display } = this.state;
+    if (!display.includes('.')) {
+      this.setState({
+        display: `${display}.`,
+        isOperatorClicked: false,
       });
     }
   };
@@ -102,7 +113,7 @@ class Calculator extends Component {
         <div className='row'>
           {this.renderCalculatorKey('+/-', 'key', (e) => this.click(e))}
           {this.renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('.', 'key', (e) => this.click(e))}
+          {this.renderCalculatorKey('.', 'key', () => this.displayDecimal())}
         </div>
       </div>
     );
