@@ -51,16 +51,17 @@ class Calculator extends Component {
     }
     // if basic operator clicked
     if (operator) {
-      const newValue = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
-      if (newValue + '' === 'NaN' || newValue + '' === 'Infinity') {
+      const result = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
+      const stringResult = result + ''; // Convert result to string for comparison
+      if (stringResult === 'NaN' || stringResult === 'Infinity') {
         this.setState({
           value: null,
-          display: newValue + '' === 'NaN' ? 'Result is NaN' : '∞',
+          display: stringResult === 'NaN' ? 'Result is NaN' : '∞',
         });
       } else {
         this.setState({
-          value: newValue,
-          display: newValue.toString(),
+          value: result,
+          display: result.toString(),
           //TODO: create history
           // history: [...this.state.history, [value, operator, newValue]],
         });
