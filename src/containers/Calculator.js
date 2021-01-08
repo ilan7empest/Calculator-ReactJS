@@ -13,10 +13,10 @@ class Calculator extends Component {
     history: [],
   };
   renderCalculatorKey(...args) {
-    const [child, cn, cb] = args;
+    const [char, cn, cb] = args;
     return (
       <CalcButton className={cn} onClick={cb}>
-        {child}
+        {char}
       </CalcButton>
     );
   }
