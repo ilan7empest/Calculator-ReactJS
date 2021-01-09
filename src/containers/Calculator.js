@@ -16,7 +16,19 @@ class Calculator extends Component {
   handleKeyPress = (e) => {
     e.preventDefault();
     let { key } = e;
-    console.log(key);
+    if (key in basicOperators) {
+      this.basicOperator(key);
+    } else {
+      switch (key) {
+        case '.':
+          this.displayDecimal();
+          break;
+        default:
+          this.displayDigit(key);
+      }
+    }
+
+    // console.log(numbersPattern.test(key));
   };
 
   componentDidMount() {
@@ -50,7 +62,7 @@ class Calculator extends Component {
   };
 
   // Handle Decimal Key
-  displayDecimal = () => {
+  displayDecimal() {
     const { display } = this.state;
     if (!display.includes('.')) {
       this.setState({
@@ -58,7 +70,7 @@ class Calculator extends Component {
         isOperatorClicked: false,
       });
     }
-  };
+  }
   //Basic Operators
   basicOperator = (selectedOperator) => {
     const { value, display, operator } = this.state;
@@ -103,11 +115,11 @@ class Calculator extends Component {
         <History history={this.state.history} />
         <Total total={this.state.display} />
         <div className='row'>
-          {this.renderCalculatorKey('/', 'key', (e) => this.basicOperator('/'))}
-          {this.renderCalculatorKey('*', 'key', (e) => this.basicOperator('*'))}
-          {this.renderCalculatorKey('-', 'key', (e) => this.basicOperator('-'))}
-          {this.renderCalculatorKey('+', 'key', (e) => this.basicOperator('+'))}
-          {this.renderCalculatorKey('=', 'key', (e) => this.basicOperator(e))}
+          {this.renderCalculatorKey('/', 'key', () => this.basicOperator('/'))}
+          {this.renderCalculatorKey('*', 'key', () => this.basicOperator('*'))}
+          {this.renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
+          {this.renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
+          {this.renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
         </div>
         <div className='row'>
           {this.renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
