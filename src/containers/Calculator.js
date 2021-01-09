@@ -12,6 +12,20 @@ class Calculator extends Component {
     isOperatorClicked: false,
     history: [],
   };
+
+  handleKeyPress = (e) => {
+    e.preventDefault();
+    let { key } = e;
+    console.log(key);
+  };
+
+  componentDidMount() {
+    document.addEventListener('keypress', this.handleKeyPress);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keypress', () => {});
+  }
+
   renderCalculatorKey(...args) {
     const [char, cn, cb] = args;
     return (
@@ -72,7 +86,7 @@ class Calculator extends Component {
       } else {
         this.setState({
           value: result,
-          display: result.toString(),
+          display: stringResult,
           //TODO: create history
           // history: [...this.state.history, [value, operator, newValue]],
         });
