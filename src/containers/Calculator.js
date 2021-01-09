@@ -16,7 +16,11 @@ class Calculator extends Component {
   handleKeyPress = (e) => {
     e.preventDefault();
     let { key } = e;
+    if (key === 'Enter') {
+      key = '=';
+    }
     if (key in basicOperators) {
+      // check if key exists in basicOperators /*-+=
       this.basicOperator(key);
     } else {
       switch (key) {
@@ -25,6 +29,7 @@ class Calculator extends Component {
           break;
         default:
           this.displayDigit(key);
+          break;
       }
     }
 
