@@ -14,7 +14,6 @@ class Calculator extends Component {
   };
 
   handleKeyPress = (e) => {
-    e.preventDefault();
     let { key } = e;
     if (key === 'Enter') {
       key = '=';
@@ -40,17 +39,9 @@ class Calculator extends Component {
     document.addEventListener('keypress', this.handleKeyPress);
   }
   componentWillUnmount() {
-    document.removeEventListener('keypress', () => {});
+    document.removeEventListener('keypress', this.handleKeyPress);
   }
 
-  renderCalculatorKey(...args) {
-    const [char, cn, cb] = args;
-    return (
-      <CalcButton className={cn} onClick={cb}>
-        {char}
-      </CalcButton>
-    );
-  }
   //Handle Digit keys (0-9). @digit = string. returned value from the button
   displayDigit = (digit) => {
     const { isOperatorClicked, display } = this.state;
@@ -76,6 +67,16 @@ class Calculator extends Component {
       });
     }
   }
+
+  // Toggle sign -+
+  toggleSign() {
+    const { display } = this.state;
+    const parseDisplay = parseFloat(display) * -1;
+    this.setState({
+      display: parseDisplay.toString(),
+    });
+  }
+
   //Basic Operators
   basicOperator = (selectedOperator) => {
     const { value, display, operator } = this.state;
@@ -115,36 +116,44 @@ class Calculator extends Component {
     console.log(value);
   };
   render() {
+    const renderCalculatorKey = (...args) => {
+      const [char, cn, cb] = args;
+      return (
+        <CalcButton className={cn} onClick={cb}>
+          {char}
+        </CalcButton>
+      );
+    };
     return (
       <div>
         <History history={this.state.history} />
         <Total total={this.state.display} />
         <div className='row'>
-          {this.renderCalculatorKey('/', 'key', () => this.basicOperator('/'))}
-          {this.renderCalculatorKey('*', 'key', () => this.basicOperator('*'))}
-          {this.renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
-          {this.renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
-          {this.renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
+          {renderCalculatorKey('/', 'key', () => this.basicOperator('/'))}
+          {renderCalculatorKey('*', 'key', () => this.basicOperator('*'))}
+          {renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
+          {renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
+          {renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
         </div>
         <div className='row'>
-          {this.renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('8', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('7', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('8', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('7', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {this.renderCalculatorKey('6', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('5', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('4', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('6', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('5', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('4', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {this.renderCalculatorKey('3', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('2', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('3', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('2', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {this.renderCalculatorKey('+/-', 'key', (e) => this.click(e))}
-          {this.renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
-          {this.renderCalculatorKey('.', 'key', () => this.displayDecimal())}
+          {renderCalculatorKey('+/-', 'key', () => this.toggleSign())}
+          {renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
+          {renderCalculatorKey('.', 'key', () => this.displayDecimal())}
         </div>
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 
 const CalcButton = ({ className, onClick, children }) => {
   const handleClick = (e) => {
+    e.preventDefault();
     const { textContent } = e.target;
     return onClick(textContent);
   };
