@@ -13,44 +13,43 @@ class Calculator extends Component {
     history: [],
   };
 
-  handleKeyPress = (e) => {
+  // Handle Key Down = keypress indicates which character was entered. keydown event is fired for all keys
+  handleKeyDown = (e) => {
     let { key } = e;
-
     /*Todo: Focus elements
     // let currentKeyEl = document.body.querySelector(`#key-${key}`);
     // currentKeyEl.focus();
     */
-
     if (key === 'Enter') {
       key = '=';
     }
-    if (key in basicOperators) {
-      // check if key exists in basicOperators /*-+=
-      this.basicOperator(key);
-    } else {
-      switch (key) {
-        case /\d/.test(key) && key:
-          this.displayDigit(key);
-          break;
-        case '.':
-          this.displayDecimal();
-          break;
-        default:
-          break;
-      }
-    }
+    switch (key) {
+      case /\d/.test(key) && key:
+        this.displayDigit(key);
+        break;
+      case key in basicOperators && key:
+        this.basicOperator(key);
+        break;
 
-    // console.log(numbersPattern.test(key));
+      case '.':
+        this.displayDecimal();
+        break;
+      case 'Backspace':
+        this.removeLastChar();
+        break;
+      default:
+        break;
+    }
   };
 
   componentDidMount() {
-    document.addEventListener('keypress', this.handleKeyPress);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
   componentWillUnmount() {
-    document.removeEventListener('keypress', this.handleKeyPress);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  //Handle Digit keys (0-9). @digit = string. returned value from the button
+  // Handle Digit keys (0-9). @digit = string. returned value from the button
   displayDigit = (digit) => {
     const { isOperatorClicked, display } = this.state;
     if (isOperatorClicked) {
@@ -76,7 +75,7 @@ class Calculator extends Component {
     }
   }
 
-  // Toggle sign -+
+  // Handle Toggle sign -+
   toggleSign() {
     const { display } = this.state;
     const parseDisplay = parseFloat(display) * -1;
@@ -85,7 +84,7 @@ class Calculator extends Component {
     });
   }
 
-  //Basic Operators
+  // Basic Operators
   basicOperator = (selectedOperator) => {
     const { value, display, operator } = this.state;
     // Convert "display" from a string to a number
@@ -120,9 +119,14 @@ class Calculator extends Component {
     }
   };
 
-  click = (value) => {
-    console.log(value);
+  // Handle remove last char
+  removeLastChar = () => {
+    const { display } = this.state;
+    this.setState({
+      display: display.substr(0, display.length - 1) || '0',
+    });
   };
+
   render() {
     const renderCalculatorKey = (...args) => {
       const [char, cn, cb] = args;
@@ -143,6 +147,7 @@ class Calculator extends Component {
           {renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
           {renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
           {renderCalculatorKey('AC', 'key', () => this.basicOperator('='))}
+          {renderCalculatorKey('last char', 'key', () => this.removeLastChar())}
         </div>
         <div className='row'>
           {renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
