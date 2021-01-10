@@ -15,6 +15,12 @@ class Calculator extends Component {
 
   handleKeyPress = (e) => {
     let { key } = e;
+
+    /*Todo: Focus elements
+    // let currentKeyEl = document.body.querySelector(`#key-${key}`);
+    // currentKeyEl.focus();
+    */
+
     if (key === 'Enter') {
       key = '=';
     }
@@ -23,11 +29,13 @@ class Calculator extends Component {
       this.basicOperator(key);
     } else {
       switch (key) {
+        case /\d/.test(key) && key:
+          this.displayDigit(key);
+          break;
         case '.':
           this.displayDecimal();
           break;
         default:
-          this.displayDigit(key);
           break;
       }
     }
@@ -134,6 +142,7 @@ class Calculator extends Component {
           {renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
           {renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
           {renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
+          {renderCalculatorKey('AC', 'key', () => this.basicOperator('='))}
         </div>
         <div className='row'>
           {renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
@@ -151,7 +160,7 @@ class Calculator extends Component {
           {renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
         </div>
         <div className='row'>
-          {renderCalculatorKey('+/-', 'key', () => this.toggleSign())}
+          {renderCalculatorKey('±', 'key', () => this.toggleSign())}
           {renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
           {renderCalculatorKey('.', 'key', () => this.displayDecimal())}
         </div>

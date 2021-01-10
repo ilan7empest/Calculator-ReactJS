@@ -7,7 +7,11 @@ const CalcButton = ({ className, onClick, children }) => {
     return onClick(textContent);
   };
   return (
-    <button type='button' className={className} onClick={(e) => handleClick(e)}>
+    <button
+      type='button'
+      id={`key-${children}`}
+      className={className}
+      onClick={(e) => handleClick(e)}>
       {children}
     </button>
   );
