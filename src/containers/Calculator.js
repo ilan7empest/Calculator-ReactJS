@@ -121,10 +121,11 @@ class Calculator extends Component {
 
   // Handle remove last char
   removeLastChar = () => {
-    const { display } = this.state;
-    this.setState({
-      display: display.substr(0, display.length - 1) || '0',
-    });
+    const { display, value } = this.state;
+    if (display !== String(value))
+      this.setState({
+        display: display.substr(0, display.length - 1) || '0',
+      });
   };
 
   render() {
