@@ -1,0 +1,52 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.container {
+  max-width: 320px;
+  height: 100vh;
+  margin: 0 auto;
+}
+.calculator {
+  width: 100%;
+  background-color: rgb(13, 31, 199);
+}
+.digits {
+  width: 100%;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+button {
+  font: inherit;
+  font-size: 1.3em;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  margin: 1px;
+  outline: 0;
+  flex: 1 0 25%;
+  min-height: 50px;
+  position: relative;
+}
+
+.key-backspace {
+  text-indent: -9999px;
+}
+.key-backspace:before {
+  content: 'X';
+  display: inline-block;
+  position: absolute;
+}

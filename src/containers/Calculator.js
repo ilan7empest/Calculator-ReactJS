@@ -122,9 +122,10 @@ class Calculator extends Component {
   // Handle remove last char
   removeLastChar = () => {
     const { display, value } = this.state;
+    let sliced = display.slice(0, -1);
     if (display !== String(value))
       this.setState({
-        display: display.substr(0, display.length - 1) || '0',
+        display: sliced || '0',
       });
   };
 
@@ -138,37 +139,41 @@ class Calculator extends Component {
       );
     };
     return (
-      <div>
+      <div className='container'>
         <History history={this.state.history} />
         <Total total={this.state.display} />
-        <div className='row'>
-          {renderCalculatorKey('/', 'key', () => this.basicOperator('/'))}
-          {renderCalculatorKey('*', 'key', () => this.basicOperator('*'))}
-          {renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
-          {renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
-          {renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
-          {renderCalculatorKey('AC', 'key', () => this.basicOperator('='))}
-          {renderCalculatorKey('last char', 'key', () => this.removeLastChar())}
-        </div>
-        <div className='row'>
-          {renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('8', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('7', 'key', (e) => this.displayDigit(e))}
-        </div>
-        <div className='row'>
-          {renderCalculatorKey('6', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('5', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('4', 'key', (e) => this.displayDigit(e))}
-        </div>
-        <div className='row'>
-          {renderCalculatorKey('3', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('2', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
-        </div>
-        <div className='row'>
-          {renderCalculatorKey('±', 'key', () => this.toggleSign())}
-          {renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
-          {renderCalculatorKey('.', 'key', () => this.displayDecimal())}
+        <div className='calculator'>
+          <div className='row'>
+            {renderCalculatorKey('AC', 'key', () => this.basicOperator('='))}
+            {renderCalculatorKey('backspace', 'key-backspace', () =>
+              this.removeLastChar()
+            )}
+          </div>
+          <div className='row'>
+            <div className='digits'>
+              <div className='row'>
+                {renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('8', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('7', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('6', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('5', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('4', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('3', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('2', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('±', 'key', () => this.toggleSign())}
+                {renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('.', 'key', () => this.displayDecimal())}
+              </div>
+            </div>
+            <div className='operators'>
+              {renderCalculatorKey('/', 'key', () => this.basicOperator('/'))}
+              {renderCalculatorKey('*', 'key', () => this.basicOperator('*'))}
+              {renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
+              {renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
+              {renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
+            </div>
+          </div>
         </div>
       </div>
     );
