@@ -128,6 +128,20 @@ class Calculator extends Component {
         display: sliced || '0',
       });
   };
+  // Handle clear display
+  clearDisplay() {
+    this.setState({ display: '0' });
+  }
+
+  //handle clearall
+  clearAll() {
+    this.setState({
+      value: null,
+      display: '0',
+      operator: null,
+      isOperatorClicked: false,
+    });
+  }
 
   render() {
     const renderCalculatorKey = (...args) => {
@@ -147,10 +161,9 @@ class Calculator extends Component {
           </div>
 
           <div className='keypad'>
-            <div className='special-operators'>
-              {renderCalculatorKey('AC', 'digit', () =>
-                this.basicOperator('=')
-              )}
+            <div className='special-operators justify-content-start'>
+              {renderCalculatorKey('AC', 'digit', () => this.clearAll())}
+              {renderCalculatorKey('C', 'digit', () => this.clearDisplay())}
             </div>
             <div className='d-flex flex-row flex-nowrap'>
               <div className='digits'>
