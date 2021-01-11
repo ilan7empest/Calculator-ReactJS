@@ -83,10 +83,21 @@ button.digit:active:before {
   padding: 20px 20px 0 20px;
   background: rgb(0, 91, 108);
   background: linear-gradient(
-    0deg,
+    300deg,
     rgba(0, 91, 108, 1) 0%,
     rgba(3, 180, 215, 1) 100%
   );
+  /* clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 75%,
+    99% 80%,
+    98% 83%,
+    96% 87%,
+    90.5% 91.5%,
+    90% 92%,
+    0% 100%
+  ); */
 }
 .display {
   font-size: 4em;
@@ -103,7 +114,7 @@ button.digit:active:before {
 .keypad {
   display: flex;
   flex-flow: row wrap;
-  padding: 20px 10px;
+  padding: 10px 10px 20px;
 }
 .digits {
   display: flex;

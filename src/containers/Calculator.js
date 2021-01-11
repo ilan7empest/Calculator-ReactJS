@@ -65,7 +65,7 @@ class Calculator extends Component {
   };
 
   // Handle Decimal Key
-  displayDecimal() {
+  displayDecimal = () => {
     const { display } = this.state;
     if (!display.includes('.')) {
       this.setState({
@@ -73,16 +73,16 @@ class Calculator extends Component {
         isOperatorClicked: false,
       });
     }
-  }
+  };
 
   // Handle Toggle sign -+
-  toggleSign() {
+  toggleSign = () => {
     const { display } = this.state;
     const parseDisplay = parseFloat(display) * -1;
     this.setState({
       display: parseDisplay.toString(),
     });
-  }
+  };
 
   // Basic Operators
   basicOperator = (selectedOperator) => {
@@ -132,19 +132,20 @@ class Calculator extends Component {
       });
   };
   // Handle clear display
-  clearDisplay() {
+  clearDisplay = () => {
     this.setState({ display: '0' });
-  }
+  };
 
   //handle clearall
-  clearAll() {
+  clearAll = () => {
     this.setState({
       value: null,
       display: '0',
       operator: null,
       isOperatorClicked: false,
+      history: [],
     });
-  }
+  };
 
   render() {
     const renderCalculatorKey = (...args) => {
@@ -165,8 +166,8 @@ class Calculator extends Component {
 
           <div className='keypad'>
             <div className='special-operators justify-content-start'>
-              {renderCalculatorKey('AC', 'digit', () => this.clearAll())}
-              {renderCalculatorKey('C', 'digit', () => this.clearDisplay())}
+              {renderCalculatorKey('AC', 'digit', this.clearAll)}
+              {renderCalculatorKey('C', 'digit', this.clearDisplay)}
             </div>
             <div className='d-flex flex-row flex-nowrap'>
               <div className='digits'>
@@ -179,9 +180,9 @@ class Calculator extends Component {
                 {renderCalculatorKey('3', 'digit', (e) => this.displayDigit(e))}
                 {renderCalculatorKey('2', 'digit', (e) => this.displayDigit(e))}
                 {renderCalculatorKey('1', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('·', 'digit', () => this.displayDecimal())}
+                {renderCalculatorKey('·', 'digit', this.displayDecimal)}
                 {renderCalculatorKey('0', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('±', 'digit', () => this.toggleSign())}
+                {renderCalculatorKey('±', 'digit', this.toggleSign)}
               </div>
               <div className='basic-operators d-flex flex-row justify-content-around'>
                 <div className='d-flex flex-column justify-content-between'>
