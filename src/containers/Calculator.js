@@ -86,13 +86,18 @@ class Calculator extends Component {
 
   // Basic Operators
   basicOperator = (selectedOperator) => {
-    const { value, display, operator } = this.state;
+    const { value, display, operator, history } = this.state;
     // Convert "display" from a string to a number
     const parseDisplay = parseFloat(display);
+    // Return new array on each
+    let logAction = history.concat([display, selectedOperator]);
+
     this.setState({
       operator: selectedOperator,
       isOperatorClicked: true,
+      history: logAction,
     });
+
     // value set to 0 if no digit clicked
     if (value === null) {
       this.setState({
@@ -112,8 +117,6 @@ class Calculator extends Component {
         this.setState({
           value: result,
           display: stringResult,
-          //TODO: create history
-          // history: [...this.state.history, [value, operator, newValue]],
         });
       }
     }
@@ -156,7 +159,7 @@ class Calculator extends Component {
       <div className='container'>
         <div className='calculator'>
           <div className='top-panel'>
-            <History history={this.state.history} />
+            <History history={[...this.state.history]} />
             <Display display={this.state.display} />
           </div>
 

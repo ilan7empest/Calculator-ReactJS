@@ -81,7 +81,6 @@ button.digit:active:before {
   flex-flow: column nowrap;
   text-align: right;
   padding: 20px 20px 0 20px;
-  height: calc(100% - 75%);
   background: rgb(0, 91, 108);
   background: linear-gradient(
     0deg,
@@ -90,12 +89,16 @@ button.digit:active:before {
   );
 }
 .display {
-  font-size: 4rem;
+  font-size: 4em;
+  line-height: 80px;
   color: #fff;
   width: 100%;
-  height: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.history {
+  color: #fff;
+  height: 30px;
 }
 .keypad {
   display: flex;
