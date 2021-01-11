@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CalcButton from '../components/CalcButton';
 import { basicOperators } from '../utils/basicOperators';
-import { Total } from '../components/total';
+import { Display } from '../components/display';
 import { History } from '../components/history';
 
 class Calculator extends Component {
@@ -140,38 +140,59 @@ class Calculator extends Component {
     };
     return (
       <div className='container'>
-        <History history={this.state.history} />
-        <Total total={this.state.display} />
         <div className='calculator'>
-          <div className='row'>
-            {renderCalculatorKey('AC', 'key', () => this.basicOperator('='))}
-            {renderCalculatorKey('backspace', 'key-backspace', () =>
-              this.removeLastChar()
-            )}
+          <div className='top-panel'>
+            <History history={this.state.history} />
+            <Display total={this.state.display} />
           </div>
-          <div className='row'>
-            <div className='digits'>
-              <div className='row'>
-                {renderCalculatorKey('9', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('8', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('7', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('6', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('5', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('4', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('3', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('2', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('1', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('±', 'key', () => this.toggleSign())}
-                {renderCalculatorKey('0', 'key', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('.', 'key', () => this.displayDecimal())}
-              </div>
+
+          <div className='keypad'>
+            <div className='special-operators'>
+              {renderCalculatorKey('AC', 'digit', () =>
+                this.basicOperator('=')
+              )}
             </div>
-            <div className='operators'>
-              {renderCalculatorKey('/', 'key', () => this.basicOperator('/'))}
-              {renderCalculatorKey('*', 'key', () => this.basicOperator('*'))}
-              {renderCalculatorKey('-', 'key', () => this.basicOperator('-'))}
-              {renderCalculatorKey('+', 'key', () => this.basicOperator('+'))}
-              {renderCalculatorKey('=', 'key', () => this.basicOperator('='))}
+            <div className='d-flex flex-row flex-nowrap'>
+              <div className='digits'>
+                {renderCalculatorKey('9', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('8', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('7', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('6', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('5', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('4', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('3', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('2', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('1', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('·', 'digit', () => this.displayDecimal())}
+                {renderCalculatorKey('0', 'digit', (e) => this.displayDigit(e))}
+                {renderCalculatorKey('±', 'digit', () => this.toggleSign())}
+              </div>
+              <div className='basic-operators d-flex flex-row justify-content-around'>
+                <div className='d-flex flex-column justify-content-between'>
+                  {renderCalculatorKey('/', 'basic', () =>
+                    this.basicOperator('/')
+                  )}
+                  {renderCalculatorKey('X', 'basic', () =>
+                    this.basicOperator('*')
+                  )}
+                  {renderCalculatorKey('-', 'basic', () =>
+                    this.basicOperator('-')
+                  )}
+                  {renderCalculatorKey('+', 'basic', () =>
+                    this.basicOperator('+')
+                  )}
+                </div>
+                <div className='d-flex flex-column justify-content-between'>
+                  {renderCalculatorKey(
+                    '<-',
+                    'basic key-backspace',
+                    this.removeLastChar
+                  )}
+                  {renderCalculatorKey('=', 'basic', () =>
+                    this.basicOperator('=')
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ const CalcButton = ({ className, onClick, children }) => {
       id={`key-${children}`}
       className={className}
       onClick={(e) => handleClick(e)}>
-      {children}
+      <span>{children}</span>
     </button>
   );
 };
