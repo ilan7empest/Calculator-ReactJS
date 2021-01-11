@@ -168,6 +168,7 @@ class Calculator extends Component {
             <div className='special-operators justify-content-start'>
               {renderCalculatorKey('AC', 'digit', this.clearAll)}
               {renderCalculatorKey('C', 'digit', this.clearDisplay)}
+              {renderCalculatorKey('', 'key-backspace', this.removeLastChar)}
             </div>
             <div className='d-flex flex-row flex-nowrap'>
               <div className='digits'>
@@ -200,11 +201,6 @@ class Calculator extends Component {
                   )}
                 </div>
                 <div className='d-flex flex-column justify-content-between'>
-                  {renderCalculatorKey(
-                    '<-',
-                    'basic key-backspace',
-                    this.removeLastChar
-                  )}
                   {renderCalculatorKey('=', 'basic', () =>
                     this.basicOperator('=')
                   )}
