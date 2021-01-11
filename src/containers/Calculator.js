@@ -157,7 +157,7 @@ class Calculator extends Component {
         <div className='calculator'>
           <div className='top-panel'>
             <History history={this.state.history} />
-            <Display total={this.state.display} />
+            <Display display={this.state.display} />
           </div>
 
           <div className='keypad'>

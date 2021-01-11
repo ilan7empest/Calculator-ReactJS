@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const Display = ({ total }) => (
-  <section className='display'>{total}</section>
-);
+export const Display = ({ display }) => {
+  // display formatting
+  const formatDisplay = parseFloat(display).toLocaleString();
+  return <section className='display'>{formatDisplay}</section>;
+};
