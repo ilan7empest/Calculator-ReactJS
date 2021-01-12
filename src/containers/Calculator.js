@@ -11,6 +11,7 @@ class Calculator extends Component {
     operator: null,
     isOperatorClicked: false,
     history: [],
+    log: [],
   };
 
   // Handle Key Down = keypress indicates which character was entered. keydown event is fired for all keys
@@ -51,11 +52,17 @@ class Calculator extends Component {
 
   // Handle Digit keys (0-9). @digit = string. returned value from the button
   displayDigit = (digit) => {
-    const { isOperatorClicked, display } = this.state;
-    if (isOperatorClicked) {
+    const { isOperatorClicked, operator, display } = this.state;
+    if (isOperatorClicked && operator !== '=') {
       this.setState({
         display: digit,
         isOperatorClicked: false,
+      });
+    } else if (operator === '=') {
+      this.setState({
+        display: digit,
+        isOperatorClicked: false,
+        history: [],
       });
     } else {
       this.setState({
@@ -113,10 +120,23 @@ class Calculator extends Component {
           value: null,
           display: stringResult === 'NaN' ? 'Result is NaN' : '∞',
         });
+      } else if (selectedOperator === '=') {
+        this.setState((prevState) => {
+          return {
+            history: [...prevState.history],
+            value: result,
+            display: stringResult,
+            log: [
+              [...prevState.history.concat(stringResult)],
+              ...prevState.log,
+            ],
+          };
+        });
       } else {
         this.setState({
           value: result,
           display: stringResult,
+          history: logAction,
         });
       }
     }
@@ -160,7 +180,7 @@ class Calculator extends Component {
       <div className='container'>
         <div className='calculator'>
           <div className='top-panel'>
-            <History history={[...this.state.history]} />
+            <History history={[...this.state.history]} log={this.state.log} />
             <Display display={this.state.display} />
           </div>
 
