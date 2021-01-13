@@ -1,6 +1,7 @@
 html,
 body {
-  font-family: 'Montserrat', 'Courier New', Courier, monospace;
+  font-family: 'Inconsolata', 'Courier New', Courier, monospace;
+  font-weight: 200;
 }
 button {
   display: flex;
@@ -74,6 +75,7 @@ button.digit:active:before {
   width: 100%;
   height: 100%;
   border-radius: 5px;
+  position: relative;
   overflow: hidden;
 }
 .top-panel {
@@ -136,7 +138,7 @@ button.basic {
   background-color: #03b4d7;
   border-radius: 50%;
   color: #fff;
-  font-size: 1em;
+  font-size: 1.4em;
   margin: 5px 0;
 }
 button.basic:before {

@@ -1,13 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-export const History = ({ history, log }) => {
-  const [newlog, setLog] = useState([]);
-
-  useEffect(() => {
-    setLog(log);
-    return () => {};
-  }, [log]);
-
-  // Todo: Save history to state on "="
+export const History = ({ history }) => {
   return <section className='history'>{history.join(' ')}</section>;
 };

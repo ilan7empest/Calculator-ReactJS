@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import CalcButton from '../components/CalcButton';
 import { basicOperators } from '../utils/basicOperators';
+import Log from '../components/Log';
 import { Display } from '../components/display';
-import { History } from '../components/history';
+import { History } from '../components/History';
 
 class Calculator extends Component {
   state = {
@@ -180,7 +181,8 @@ class Calculator extends Component {
       <div className='container'>
         <div className='calculator'>
           <div className='top-panel'>
-            <History history={[...this.state.history]} log={this.state.log} />
+            <Log log={this.state.log} />
+            <History history={this.state.history} />
             <Display display={this.state.display} />
           </div>
 
@@ -210,7 +212,7 @@ class Calculator extends Component {
                   {renderCalculatorKey('/', 'basic', () =>
                     this.basicOperator('/')
                   )}
-                  {renderCalculatorKey('X', 'basic', () =>
+                  {renderCalculatorKey('*', 'basic', () =>
                     this.basicOperator('*')
                   )}
                   {renderCalculatorKey('-', 'basic', () =>
