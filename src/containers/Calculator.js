@@ -15,6 +15,13 @@ class Calculator extends Component {
     log: [],
   };
 
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
   // Handle Key Down = keypress indicates which character was entered. keydown event is fired for all keys
   handleKeyDown = (e) => {
     let { key } = e;
@@ -43,13 +50,6 @@ class Calculator extends Component {
         break;
     }
   };
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
 
   // Handle Digit keys (0-9). @digit = string. returned value from the button
   displayDigit = (digit) => {
@@ -172,7 +172,7 @@ class Calculator extends Component {
     const renderCalculatorKey = (...args) => {
       const [char, cn, cb] = args;
       return (
-        <CalcButton className={cn} onClick={cb}>
+        <CalcButton type={char} className={cn} onClick={cb}>
           {char}
         </CalcButton>
       );
@@ -191,8 +191,8 @@ class Calculator extends Component {
               {renderCalculatorKey('AC', 'digit', this.clearAll)}
               {renderCalculatorKey('C', 'digit', this.clearDisplay)}
               {renderCalculatorKey(
-                '',
-                'digit key-backspace',
+                null,
+                'digit icon key-backspace',
                 this.removeLastChar
               )}
             </div>
@@ -213,10 +213,10 @@ class Calculator extends Component {
               </div>
               <div className='basic-operators d-flex flex-row justify-content-around'>
                 <div className='d-flex flex-column justify-content-between'>
-                  {renderCalculatorKey('/', 'basic', () =>
+                  {renderCalculatorKey('DEVISION', 'basic icon', () =>
                     this.basicOperator('/')
                   )}
-                  {renderCalculatorKey('*', 'basic', () =>
+                  {renderCalculatorKey('MULTIPLICATION', 'basic icon', () =>
                     this.basicOperator('*')
                   )}
                   {renderCalculatorKey('-', 'basic', () =>

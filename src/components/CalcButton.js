@@ -1,6 +1,9 @@
 import React from 'react';
 
-const CalcButton = ({ className, onClick, children }) => {
+import { svgSelector } from '../utils/svgSelector';
+import './CalcButton.css';
+
+const CalcButton = ({ type, className, onClick, children }) => {
   const handleClick = (e) => {
     e.preventDefault();
     const { textContent } = e.target;
@@ -9,10 +12,11 @@ const CalcButton = ({ className, onClick, children }) => {
   return (
     <button
       type='button'
-      id={`key-${children}`}
+      id={type}
       className={className}
       onClick={(e) => handleClick(e)}>
       <span>{children}</span>
+      {svgSelector(type)}
     </button>
   );
 };

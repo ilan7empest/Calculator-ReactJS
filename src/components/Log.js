@@ -28,8 +28,16 @@ const Log = ({ log }) => {
       <i
         className={classes.historyIcon}
         alt='View History'
-        onClick={() => setOpen(!open)}
-      />
+        onClick={() => setOpen(!open)}>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          data-name='Layer 1'
+          id='Layer_1'
+          viewBox='0 0 24 24'>
+          <title />
+          <path d='M11,7.4V13h4.68V11H13V7.4Zm7.36-1.76a9,9,0,0,0-12.72,0L5,6.31l-2-2V10H8.66L6.38,7.72l.67-.67a7,7,0,1,1-2,6h-2A9,9,0,0,0,12,21,9,9,0,0,0,18.36,5.64Z' />
+        </svg>
+      </i>
       <div className={logClasses.join(' ')}>
         {logHistory.length === 0 ? (
           "There's no history"
