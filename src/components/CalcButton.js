@@ -3,7 +3,7 @@ import React from 'react';
 import { svgSelector } from '../utils/svgSelector';
 import './CalcButton.css';
 
-const CalcButton = ({ type, className, onClick, children }) => {
+const CalcButton = ({ name, type, className, onClick, children }) => {
   const handleClick = (e) => {
     e.preventDefault();
     const { textContent } = e.target;
@@ -12,7 +12,7 @@ const CalcButton = ({ type, className, onClick, children }) => {
   return (
     <button
       type='button'
-      id={type}
+      id={name}
       className={className}
       onClick={(e) => handleClick(e)}>
       <span>{children}</span>

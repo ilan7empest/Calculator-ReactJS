@@ -24,11 +24,13 @@ class Calculator extends Component {
 
   // Handle Key Down = keypress indicates which character was entered. keydown event is fired for all keys
   handleKeyDown = (e) => {
-    let { key } = e;
-    /*Todo: Focus elements
-    // let currentKeyEl = document.body.querySelector(`#key-${key}`);
-    // currentKeyEl.focus();
-    */
+    let { key, code } = e;
+    // Todo: Focus elements
+    const currentKey = document.body.querySelector(`#${code}`);
+    if (currentKey) {
+      currentKey.focus();
+    }
+
     if (key === 'Enter') {
       key = '=';
     }
@@ -170,9 +172,9 @@ class Calculator extends Component {
 
   render() {
     const renderCalculatorKey = (...args) => {
-      const [char, cn, cb] = args;
+      const [char, n, cn, cb] = args;
       return (
-        <CalcButton type={char} className={cn} onClick={cb}>
+        <CalcButton name={n} type={char} className={cn} onClick={cb}>
           {char}
         </CalcButton>
       );
@@ -188,46 +190,83 @@ class Calculator extends Component {
 
           <div className='keypad'>
             <div className='special-operators justify-content-start'>
-              {renderCalculatorKey('AC', 'digit', this.clearAll)}
-              {renderCalculatorKey('C', 'digit', this.clearDisplay)}
+              {renderCalculatorKey('AC', 'clearAll', 'digit', this.clearAll)}
+              {renderCalculatorKey('C', 'clear', 'digit', this.clearDisplay)}
               {renderCalculatorKey(
                 null,
+                'Backspace',
                 'digit icon key-backspace',
                 this.removeLastChar
               )}
             </div>
             <div className='d-flex flex-row flex-nowrap'>
               <div className='digits'>
-                {renderCalculatorKey('9', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('8', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('7', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('6', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('5', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('4', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('3', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('2', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('1', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('·', 'digit', this.displayDecimal)}
-                {renderCalculatorKey('0', 'digit', (e) => this.displayDigit(e))}
-                {renderCalculatorKey('±', 'digit', this.toggleSign)}
+                {renderCalculatorKey('9', 'Numpad9', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('8', 'Numpad8', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('7', 'Numpad7', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('6', 'Numpad6', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('5', 'Numpad5', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('4', 'Numpad4', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('3', 'Numpad3', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('2', 'Numpad2', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey('1', 'Numpad1', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey(
+                  '·',
+                  'NumpadDecimal',
+                  'digit',
+                  this.displayDecimal
+                )}
+                {renderCalculatorKey('0', 'Numpad0', 'digit', (e) =>
+                  this.displayDigit(e)
+                )}
+                {renderCalculatorKey(
+                  '±',
+                  'toogleSign',
+                  'digit',
+                  this.toggleSign
+                )}
               </div>
               <div className='basic-operators d-flex flex-row justify-content-around'>
                 <div className='d-flex flex-column justify-content-between'>
-                  {renderCalculatorKey('DEVISION', 'basic icon', () =>
-                    this.basicOperator('/')
+                  {renderCalculatorKey(
+                    'DIVIDE',
+                    'NumpadDivide',
+                    'basic icon',
+                    () => this.basicOperator('/')
                   )}
-                  {renderCalculatorKey('MULTIPLICATION', 'basic icon', () =>
-                    this.basicOperator('*')
+                  {renderCalculatorKey(
+                    'MULTIPLY',
+                    'NumpadMultiply',
+                    'basic icon',
+                    () => this.basicOperator('*')
                   )}
-                  {renderCalculatorKey('-', 'basic', () =>
+                  {renderCalculatorKey('-', 'NumpadSubtract', 'basic', () =>
                     this.basicOperator('-')
                   )}
-                  {renderCalculatorKey('+', 'basic', () =>
+                  {renderCalculatorKey('+', 'NumpadAdd', 'basic', () =>
                     this.basicOperator('+')
                   )}
                 </div>
                 <div className='d-flex flex-column justify-content-end'>
-                  {renderCalculatorKey('=', 'basic equal', () =>
+                  {renderCalculatorKey('=', 'NumpadEnter', 'basic equal', () =>
                     this.basicOperator('=')
                   )}
                 </div>

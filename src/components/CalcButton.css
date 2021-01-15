@@ -6,9 +6,9 @@ button {
   font-size: 1.8em;
   margin: 5px;
   padding: 0;
+  border-radius: 50%;
   border: 0;
-  border-radius: 0;
-  background-color: transparent;
+  background-color: #d8d8d8;
   cursor: pointer;
   position: relative;
   width: 50px;
@@ -33,7 +33,6 @@ button:before {
   width: inherit;
   height: inherit;
   border-radius: 50%;
-  background-color: #d8d8d8;
   position: absolute;
   left: 0;
   top: 0;
@@ -46,6 +45,13 @@ button:before,
 button:hover:before,
 button:active:before {
   transition: all 0.2s linear;
+}
+
+button:focus {
+  -webkit-animation: animateButton 1s normal; /* Safari 4+ */
+  -moz-animation: animateButton 1s normal; /* Fx 5+ */
+  -o-animation: animateButton 1s normal; /* Opera 12+ */
+  animation: animateButton 1s normal; /* IE 10+, Fx 29+ */
 }
 
 /* Digits */
@@ -63,11 +69,11 @@ button.digit:active:before {
 /* Operators */
 button.basic {
   color: #fff;
+  background-color: #03b4d7;
   font-size: 2.2em;
   margin: 5px 0;
 }
 button.basic:before {
-  background-color: #03b4d7;
   opacity: 1;
 }
 
@@ -104,4 +110,37 @@ button:after {
   background-size: contain;
   width: 30px;
   height: 30px;
+}
+
+@-webkit-keyframes animateButton {
+  0% {
+    background-color: #fc8f36;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-moz-keyframes animateButton {
+  0% {
+    background-color: #fc8f36;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-o-keyframes animateButton {
+  0% {
+    background-color: #fc8f36;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes animateButton {
+  0% {
+    background-color: #fc8f36;
+  }
+  100% {
+    background-color: transparent;
+  }
 }

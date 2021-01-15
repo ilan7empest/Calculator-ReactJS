@@ -1,6 +1,6 @@
 export const svgSelector = (type) => {
   switch (type) {
-    case 'DEVISION':
+    case 'DIVIDE':
       return (
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -16,7 +16,7 @@ export const svgSelector = (type) => {
           <path d='M14 17C14 18.1046 13.1046 19 12 19C10.8954 19 10 18.1046 10 17C10 15.8954 10.8954 15 12 15C13.1046 15 14 15.8954 14 17Z' />
         </svg>
       );
-    case 'MULTIPLICATION':
+    case 'MULTIPLY':
       return (
         <svg
           xmlns='http://www.w3.org/2000/svg'
