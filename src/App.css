@@ -23,7 +23,7 @@ body {
   display: flex;
   flex-flow: column nowrap;
   text-align: right;
-  padding: 20px 20px 0 20px;
+  padding: 20px 20px 10px 20px;
   background: rgb(0, 91, 108);
   background: linear-gradient(
     300deg,
@@ -33,7 +33,7 @@ body {
 }
 .display {
   font-size: 4em;
-  line-height: 80px;
+  line-height: 60px;
   color: #fff;
   width: 100%;
   overflow: hidden;
@@ -41,7 +41,9 @@ body {
 }
 .history {
   color: #fff;
-  height: 30px;
+  padding-left: 20px;
+  height: 70px;
+  overflow: hidden;
 }
 .keypad {
   display: flex;

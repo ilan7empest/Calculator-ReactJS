@@ -65,6 +65,7 @@ class Calculator extends Component {
       this.setState({
         display: digit,
         isOperatorClicked: false,
+        operator: null,
         history: [],
       });
     } else {
@@ -193,7 +194,7 @@ class Calculator extends Component {
               {renderCalculatorKey('AC', 'clearAll', 'digit', this.clearAll)}
               {renderCalculatorKey('C', 'clear', 'digit', this.clearDisplay)}
               {renderCalculatorKey(
-                null,
+                'BACKSPACE',
                 'Backspace',
                 'digit icon key-backspace',
                 this.removeLastChar

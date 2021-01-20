@@ -20,8 +20,8 @@ export const svgSelector = (type) => {
       return (
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          height='24'
           viewBox='0 0 24 24'
+          height='24'
           width='24'>
           <path
             clipRule='evenodd'
@@ -33,6 +33,17 @@ export const svgSelector = (type) => {
             d='M7.05022 7.05028C7.44074 6.65975 8.07391 6.65975 8.46443 7.05028L16.9497 15.5356C17.3402 15.9261 17.3402 16.5592 16.9497 16.9498C16.5592 17.3403 15.926 17.3403 15.5355 16.9498L7.05022 8.46449C6.65969 8.07397 6.65969 7.4408 7.05022 7.05028Z'
             fillRule='evenodd'
           />
+        </svg>
+      );
+    case 'BACKSPACE':
+      return (
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 48 48'
+          width='24'
+          height='24'>
+          <path d='M0 0h48v48H0z' fill='none' />
+          <path d='M44 6H14c-1.38 0-2.47.7-3.19 1.76L0 23.99l10.81 16.23C11.53 41.28 12.62 42 14 42h30c2.21 0 4-1.79 4-4V10c0-2.21-1.79-4-4-4zm-6 25.17L35.17 34 28 26.83 20.83 34 18 31.17 25.17 24 18 16.83 20.83 14 28 21.17 35.17 14 38 16.83 30.83 24 38 31.17z' />
         </svg>
       );
     default:
