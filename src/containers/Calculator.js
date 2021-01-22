@@ -65,7 +65,6 @@ class Calculator extends Component {
       this.setState({
         display: digit,
         isOperatorClicked: false,
-        operator: null,
         history: [],
       });
     } else {
@@ -97,44 +96,61 @@ class Calculator extends Component {
 
   // Basic Operators
   basicOperator = (selectedOperator) => {
-    const { value, display, operator, history } = this.state;
+    const { value, display, operator, history, isOperatorClicked } = this.state;
     // Convert "display" from a string to a number
     const parseDisplay = parseFloat(display);
     // Return new array on each
-    let logAction = history.concat([display, selectedOperator]);
+    const logAction = history.concat([parseDisplay, selectedOperator]);
+    const lastHistoryChar = logAction[logAction.length - 1];
 
     this.setState({
       operator: selectedOperator,
-      isOperatorClicked: true,
-      history: logAction,
     });
-
     // value set to 0 if no digit clicked
     if (value === null) {
       this.setState({
         value: parseDisplay,
       });
     }
+    if (!isOperatorClicked) {
+      this.setState({
+        isOperatorClicked: true,
+        history: logAction,
+      });
+    }
+
     // if basic operator clicked
     if (operator) {
       const result = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
       const stringResult = result + ''; // Convert result to string for comparison
-      if (stringResult === 'NaN' || stringResult === 'Infinity') {
-        this.setState({
-          value: null,
-          display: stringResult === 'NaN' ? 'Result is NaN' : '∞',
-        });
-      } else if (selectedOperator === '=') {
+
+      if (selectedOperator === '=' && operator !== '=') {
         this.setState((prevState) => {
           return {
             history: [...prevState.history],
             value: result,
             display: stringResult,
             log: [
-              [...prevState.history.concat(stringResult)],
+              [...prevState.history.concat(+stringResult)],
               ...prevState.log,
             ],
           };
+        });
+      } else if (
+        typeof lastHistoryChar === 'string' &&
+        this.state.isOperatorClicked &&
+        selectedOperator !== '='
+      ) {
+        const updateLog = [...history];
+        updateLog.splice(-1, 1, selectedOperator);
+        this.setState({
+          operator: selectedOperator,
+          history: updateLog,
+        });
+      } else if (stringResult === 'NaN' || stringResult === 'Infinity') {
+        this.setState({
+          value: null,
+          display: stringResult === 'NaN' ? 'Result is NaN' : '∞',
         });
       } else {
         this.setState({
