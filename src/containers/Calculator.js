@@ -26,6 +26,9 @@ class Calculator extends Component {
   handleKeyDown = (e) => {
     let { key, code } = e;
     // Todo: Focus elements
+    if (!code) {
+      return;
+    }
     const currentKey = document.body.querySelector(`#${code}`);
     if (currentKey) {
       currentKey.focus();
@@ -55,17 +58,20 @@ class Calculator extends Component {
 
   // Handle Digit keys (0-9). @digit = string. returned value from the button
   displayDigit = (digit) => {
-    const { isOperatorClicked, operator, display } = this.state;
-    if (isOperatorClicked && operator !== '=') {
-      this.setState({
-        display: digit,
-        isOperatorClicked: false,
-      });
-    } else if (operator === '=') {
+    const { isOperatorClicked, operator, display, history } = this.state;
+    const lastHistoryChar = history[history.length - 1];
+
+    if (operator === '=' || lastHistoryChar === '=') {
       this.setState({
         display: digit,
         isOperatorClicked: false,
         history: [],
+        value: null,
+      });
+    } else if (isOperatorClicked && operator !== '=') {
+      this.setState({
+        display: digit,
+        isOperatorClicked: false,
       });
     } else {
       this.setState({
@@ -99,13 +105,16 @@ class Calculator extends Component {
     const { value, display, operator, history, isOperatorClicked } = this.state;
     // Convert "display" from a string to a number
     const parseDisplay = parseFloat(display);
-    // Return new array on each
+    // Return new array on each operation click
     const logAction = history.concat([parseDisplay, selectedOperator]);
-    const lastHistoryChar = logAction[logAction.length - 1];
+    const lastHistoryChar = history[history.length - 1];
 
-    this.setState({
-      operator: selectedOperator,
-    });
+    if (lastHistoryChar !== '=') {
+      this.setState({
+        operator: selectedOperator,
+      });
+    }
+
     // value set to 0 if no digit clicked
     if (value === null) {
       this.setState({
@@ -134,10 +143,13 @@ class Calculator extends Component {
               [...prevState.history.concat(+stringResult)],
               ...prevState.log,
             ],
+            operator: selectedOperator,
           };
         });
+        // Change operator sign if last history sign is an operator
       } else if (
         typeof lastHistoryChar === 'string' &&
+        lastHistoryChar !== '=' &&
         this.state.isOperatorClicked &&
         selectedOperator !== '='
       ) {
@@ -147,6 +159,21 @@ class Calculator extends Component {
           operator: selectedOperator,
           history: updateLog,
         });
+      } else if (
+        lastHistoryChar === '=' &&
+        this.state.isOperatorClicked &&
+        selectedOperator !== '='
+      ) {
+        this.setState({
+          operator: selectedOperator,
+          history: [display, selectedOperator],
+        });
+      } else if (
+        lastHistoryChar === '=' &&
+        this.state.isOperatorClicked &&
+        selectedOperator === '='
+      ) {
+        return;
       } else if (stringResult === 'NaN' || stringResult === 'Infinity') {
         this.setState({
           value: null,
