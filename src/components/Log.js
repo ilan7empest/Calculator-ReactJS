@@ -40,7 +40,11 @@ const Log = ({ log }) => {
           <ul>
             {logHistory.map((logItem, index) => {
               const text = logOpertions(logItem);
-              const result = logItem[logItem.length - 1];
+              let result = logItem[logItem.length - 1];
+              result = parseFloat(result).toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 10,
+              });
 
               return (
                 <li key={index} className='d-flex flex-column mb-3'>

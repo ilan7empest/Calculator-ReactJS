@@ -67,6 +67,7 @@ class Calculator extends Component {
         isOperatorClicked: false,
         history: [],
         value: null,
+        operator: null,
       });
     } else if (isOperatorClicked && operator !== '=') {
       this.setState({
@@ -133,7 +134,7 @@ class Calculator extends Component {
       const result = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
       const stringResult = result + ''; // Convert result to string for comparison
 
-      if (selectedOperator === '=' && operator !== '=') {
+      if (selectedOperator === '=' && operator !== '=' && !isOperatorClicked) {
         this.setState((prevState) => {
           return {
             history: [...prevState.history],
@@ -158,6 +159,29 @@ class Calculator extends Component {
         this.setState({
           operator: selectedOperator,
           history: updateLog,
+        });
+      } else if (
+        typeof lastHistoryChar === 'string' &&
+        lastHistoryChar !== '=' &&
+        isOperatorClicked &&
+        selectedOperator === '='
+      ) {
+        this.setState((prevState) => {
+          return {
+            history: [...prevState.history, parseDisplay, selectedOperator],
+            value: result,
+            display: stringResult,
+            log: [
+              [
+                ...prevState.history,
+                parseDisplay,
+                selectedOperator,
+                +stringResult,
+              ],
+              ...prevState.log,
+            ],
+            operator: selectedOperator,
+          };
         });
       } else if (
         lastHistoryChar === '=' &&
