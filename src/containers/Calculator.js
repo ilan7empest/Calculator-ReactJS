@@ -150,7 +150,7 @@ class Calculator extends Component {
       } else if (
         typeof lastHistoryChar === 'string' &&
         lastHistoryChar !== '=' &&
-        this.state.isOperatorClicked &&
+        isOperatorClicked &&
         selectedOperator !== '='
       ) {
         const updateLog = [...history];
@@ -161,7 +161,7 @@ class Calculator extends Component {
         });
       } else if (
         lastHistoryChar === '=' &&
-        this.state.isOperatorClicked &&
+        isOperatorClicked &&
         selectedOperator !== '='
       ) {
         this.setState({
@@ -170,7 +170,7 @@ class Calculator extends Component {
         });
       } else if (
         lastHistoryChar === '=' &&
-        this.state.isOperatorClicked &&
+        isOperatorClicked &&
         selectedOperator === '='
       ) {
         return;
