@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 
+import { numberWithCommas } from '../utils/helpers';
+
 import classes from './Log.module.css';
 
 const Log = ({ log }) => {
@@ -38,21 +40,18 @@ const Log = ({ log }) => {
           "There's no history"
         ) : (
           <ul>
-            {logHistory.map((logItem, index) => {
-              const text = logOpertions(logItem);
-              let result = logItem[logItem.length - 1];
-              result = parseFloat(result).toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 10,
-              });
-
-              return (
-                <li key={index} className='d-flex flex-column mb-3'>
-                  <span>{text}</span>
-                  <span className='fs-3 lh-1'>{result}</span>
-                </li>
-              );
-            })}
+            {logHistory
+              .map((logItem, index) => {
+                const text = logOpertions(logItem);
+                let result = numberWithCommas(logItem[logItem.length - 1]);
+                return (
+                  <li key={index} className='d-flex flex-column mb-3'>
+                    <span>{text}</span>
+                    <span className='fs-3 lh-1'>{result}</span>
+                  </li>
+                );
+              })
+              .reverse()}
           </ul>
         )}
       </div>

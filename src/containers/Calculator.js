@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CalcButton from '../components/CalcButton';
 import { basicOperators } from '../utils/basicOperators';
+
 import Log from '../components/Log';
 import { Display } from '../components/display';
 import { History } from '../components/History';
@@ -105,7 +106,8 @@ class Calculator extends Component {
   basicOperator = (selectedOperator) => {
     const { value, display, operator, history, isOperatorClicked } = this.state;
     // Convert "display" from a string to a number
-    const parseDisplay = parseFloat(display);
+    let parseDisplay = parseFloat(display);
+
     // Return new array on each operation click
     const logAction = history.concat([parseDisplay, selectedOperator]);
     const lastHistoryChar = history[history.length - 1];
@@ -140,10 +142,7 @@ class Calculator extends Component {
             history: [...prevState.history],
             value: result,
             display: stringResult,
-            log: [
-              [...prevState.history.concat(+stringResult)],
-              ...prevState.log,
-            ],
+            log: [...prevState.log, [...prevState.history, +stringResult]],
             operator: selectedOperator,
           };
         });
@@ -172,13 +171,13 @@ class Calculator extends Component {
             value: result,
             display: stringResult,
             log: [
+              ...prevState.log,
               [
                 ...prevState.history,
                 parseDisplay,
                 selectedOperator,
                 +stringResult,
               ],
-              ...prevState.log,
             ],
             operator: selectedOperator,
           };
@@ -210,6 +209,21 @@ class Calculator extends Component {
           history: logAction,
         });
       }
+    }
+  };
+
+  calcPercentage = () => {
+    let newDisplay;
+    if (this.state.operator === '/' || this.state.operator === '*') {
+      newDisplay = Number(this.state.display) / 100;
+      this.setState({
+        display: newDisplay + '',
+      });
+    } else {
+      newDisplay = (this.state.value * Number(this.state.display)) / 100;
+      this.setState({
+        display: newDisplay + '',
+      });
     }
   };
 
@@ -260,6 +274,12 @@ class Calculator extends Component {
             <div className='special-operators justify-content-start'>
               {renderCalculatorKey('AC', 'clearAll', 'digit', this.clearAll)}
               {renderCalculatorKey('C', 'clear', 'digit', this.clearDisplay)}
+              {renderCalculatorKey(
+                '%',
+                'Percentage',
+                'digit',
+                this.calcPercentage
+              )}
               {renderCalculatorKey(
                 'BACKSPACE',
                 'Backspace',
