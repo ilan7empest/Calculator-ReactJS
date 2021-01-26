@@ -275,9 +275,9 @@ class Calculator extends Component {
               {renderCalculatorKey('AC', 'clearAll', 'digit', this.clearAll)}
               {renderCalculatorKey('C', 'clear', 'digit', this.clearDisplay)}
               {renderCalculatorKey(
-                '%',
+                'PERCENTAGE',
                 'Percentage',
-                'digit',
+                'digit icon',
                 this.calcPercentage
               )}
               {renderCalculatorKey(
