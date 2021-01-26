@@ -61,6 +61,7 @@ button.basic.equal {
   height: 108px;
   border-radius: 5px;
 }
+
 /* SVG */
 button.icon span {
   text-indent: -9999px;
@@ -69,6 +70,15 @@ button.basic.icon svg {
   fill: #fff;
   width: 30px;
   height: 30px;
+}
+/* backspace */
+button.basic.icon.key-backspace {
+  margin: 5px;
+}
+button.basic.icon.key-backspace svg {
+  margin: 5px;
+  width: 24px;
+  height: 24px;
 }
 
 @-webkit-keyframes animateButton {

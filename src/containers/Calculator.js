@@ -283,7 +283,7 @@ class Calculator extends Component {
               {renderCalculatorKey(
                 'BACKSPACE',
                 'Backspace',
-                'digit icon key-backspace',
+                'digit basic icon key-backspace',
                 this.removeLastChar
               )}
             </div>
