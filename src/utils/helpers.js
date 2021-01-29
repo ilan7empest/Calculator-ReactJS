@@ -1,5 +1,5 @@
 export const numberWithCommas = (displayeNumber = '') => {
-  let commas = parseFloat(displayeNumber).toLocaleString(undefined, {
+  let commas = Number.parseFloat(displayeNumber, 10).toLocaleString(undefined, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 10,
   });

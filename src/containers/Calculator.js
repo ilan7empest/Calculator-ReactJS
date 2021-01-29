@@ -106,7 +106,7 @@ class Calculator extends Component {
   basicOperator = (selectedOperator) => {
     const { value, display, operator, history, isOperatorClicked } = this.state;
     // Convert "display" from a string to a number
-    let parseDisplay = parseFloat(display);
+    let parseDisplay = Number.parseFloat(display, 10);
 
     // Return new array on each operation click
     const logAction = history.concat([parseDisplay, selectedOperator]);
@@ -134,13 +134,19 @@ class Calculator extends Component {
     // if basic operator clicked
     if (operator) {
       const result = basicOperators[operator](value || 0, parseDisplay); // returned calculated value based on the operator /*-+
-      const stringResult = result + ''; // Convert result to string for comparison
+      const stringResult = Number.parseFloat(result, 10).toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 10,
+        }
+      ); // Convert result to string for comparison
 
       if (selectedOperator === '=' && operator !== '=' && !isOperatorClicked) {
         this.setState((prevState) => {
           return {
             history: [...prevState.history],
-            value: result,
+            value: +stringResult,
             display: stringResult,
             log: [...prevState.log, [...prevState.history, +stringResult]],
             operator: selectedOperator,
@@ -168,7 +174,7 @@ class Calculator extends Component {
         this.setState((prevState) => {
           return {
             history: [...prevState.history, parseDisplay, selectedOperator],
-            value: result,
+            value: +stringResult,
             display: stringResult,
             log: [
               ...prevState.log,
@@ -204,7 +210,7 @@ class Calculator extends Component {
         });
       } else {
         this.setState({
-          value: result,
+          value: +stringResult,
           display: stringResult,
           history: logAction,
         });
