@@ -3,7 +3,7 @@ import CalcButton from '../components/CalcButton';
 import { basicOperators } from '../utils/basicOperators';
 
 import Log from '../components/Log';
-import { Display } from '../components/display';
+import { Display } from '../components/Display';
 import { History } from '../components/History';
 
 class Calculator extends Component {
